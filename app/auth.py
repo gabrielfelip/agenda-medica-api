@@ -2,7 +2,7 @@ from flask import Blueprint, jsonify, request
 from .database import db
 from .models import Usuario
 from flask_bcrypt import Bcrypt
-
+from flask_jwt_extended import create_access_token
 
 auth = Blueprint("auth", __name__)
 
@@ -87,11 +87,17 @@ def login_usuario():
         }), 401
 
 
+    token = create_access_token(
+    identity=str(usuario.id)
+)
+
+
     return jsonify({
-        "message": "Login realizado com sucesso!",
-        "usuario": {
-            "id": usuario.id,
-            "nome": usuario.nome,
-            "email": usuario.email
-        }
-    })
+    "message": "Login realizado com sucesso!",
+    "token": token,
+    "usuario": {
+        "id": usuario.id,
+        "nome": usuario.nome,
+        "email": usuario.email
+    }
+}) 

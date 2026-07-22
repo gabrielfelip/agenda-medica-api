@@ -2,6 +2,7 @@ from flask import Blueprint, jsonify, request
 from sqlalchemy.exc import IntegrityError
 from .database import db
 from .models import Paciente
+from flask_jwt_extended import jwt_required
 
 
 main = Blueprint("main", __name__)
@@ -22,6 +23,7 @@ def health():
 
 
 @main.route("/pacientes", methods=["GET"])
+@jwt_required()
 def listar_pacientes():
 
     pacientes = Paciente.query.all()
@@ -38,6 +40,7 @@ def listar_pacientes():
 
 
 @main.route("/pacientes", methods=["POST"])
+@jwt_required()
 def criar_paciente():
 
     dados = request.json
@@ -73,6 +76,7 @@ def criar_paciente():
 
 
 @main.route("/pacientes/<int:id>", methods=["GET"])
+@jwt_required()
 def buscar_paciente(id):
 
     paciente = Paciente.query.get(id)
@@ -91,6 +95,7 @@ def buscar_paciente(id):
 
 
 @main.route("/pacientes/<int:id>", methods=["PUT"])
+@jwt_required()
 def atualizar_paciente(id):
 
     paciente = Paciente.query.get(id)
@@ -114,6 +119,7 @@ def atualizar_paciente(id):
 
 
 @main.route("/pacientes/<int:id>", methods=["DELETE"])
+@jwt_required()
 def deletar_paciente(id):
 
     paciente = Paciente.query.get(id)
