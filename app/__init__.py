@@ -1,6 +1,7 @@
 from flask import Flask
 from .routes import main
 from .database import db
+from .auth import auth
 
 
 app = Flask(__name__)
@@ -16,6 +17,7 @@ db.init_app(app)
 
 
 app.register_blueprint(main)
+app.register_blueprint(auth)
 
 
 with app.app_context():
