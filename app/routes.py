@@ -93,3 +93,20 @@ def atualizar_paciente(id):
     return jsonify({
         "message": "Paciente atualizado com sucesso!"
     })
+
+@main.route("/pacientes/<int:id>", methods=["DELETE"])
+def deletar_paciente(id):
+
+    paciente = Paciente.query.get(id)
+
+    if not paciente:
+        return jsonify({
+            "message": "Paciente não encontrado"
+        }), 404
+
+    db.session.delete(paciente)
+    db.session.commit()
+
+    return jsonify({
+        "message": "Paciente removido com sucesso!"
+    })
