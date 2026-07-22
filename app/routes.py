@@ -1,4 +1,5 @@
 from flask import Blueprint, jsonify, request
+from sqlalchemy.exc import IntegrityError
 from .database import db
 from .models import Paciente
 
@@ -22,6 +23,7 @@ def health():
 
 @main.route("/pacientes", methods=["GET"])
 def listar_pacientes():
+
     pacientes = Paciente.query.all()
 
     return jsonify([
@@ -40,14 +42,29 @@ def criar_paciente():
 
     dados = request.json
 
+    if not dados.get("nome"):
+        return jsonify({
+            "message": "Nome é obrigatório"
+        }), 400
+
+
     paciente = Paciente(
         nome=dados["nome"],
         email=dados.get("email"),
         telefone=dados.get("telefone")
     )
 
-    db.session.add(paciente)
-    db.session.commit()
+    try:
+        db.session.add(paciente)
+        db.session.commit()
+
+    except IntegrityError:
+        db.session.rollback()
+
+        return jsonify({
+            "message": "Email já cadastrado"
+        }), 400
+
 
     return jsonify({
         "message": "Paciente criado com sucesso!",
@@ -72,6 +89,7 @@ def buscar_paciente(id):
         "telefone": paciente.telefone
     })
 
+
 @main.route("/pacientes/<int:id>", methods=["PUT"])
 def atualizar_paciente(id):
 
@@ -93,6 +111,7 @@ def atualizar_paciente(id):
     return jsonify({
         "message": "Paciente atualizado com sucesso!"
     })
+
 
 @main.route("/pacientes/<int:id>", methods=["DELETE"])
 def deletar_paciente(id):
