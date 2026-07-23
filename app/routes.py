@@ -3,6 +3,7 @@ from sqlalchemy.exc import IntegrityError
 from .database import db
 from .models import Paciente
 from flask_jwt_extended import jwt_required, get_jwt_identity
+from .services.agenda_service import buscar_agendamentos
 
 
 main = Blueprint("main", __name__)
@@ -182,3 +183,21 @@ def deletar_paciente(id):
     return jsonify({
         "message": "Paciente removido com sucesso!"
     })
+
+@main.route("/agendamentos", methods=["GET"])
+@jwt_required()
+def listar_agendamentos():
+
+    resultado = buscar_agendamentos()
+
+    if isinstance(resultado, dict) and "erro" in resultado:
+        return jsonify(resultado), 503
+
+
+    if not resultado:
+        return jsonify({
+            "message": "Nenhum agendamento encontrado"
+        }), 404
+
+
+    return jsonify(resultado)
