@@ -1,4 +1,4 @@
-from flask import Blueprint, jsonify, request
+from flask import Blueprint, jsonify, request, render_template
 from sqlalchemy.exc import IntegrityError
 from .database import db
 from .models import Paciente
@@ -11,9 +11,8 @@ main = Blueprint("main", __name__)
 
 @main.route("/")
 def home():
-    return jsonify({
-        "message": "Agenda Médica API funcionando!"
-    })
+    return render_template("login.html")
+
 
 
 @main.route("/health")
@@ -201,3 +200,8 @@ def listar_agendamentos():
 
 
     return jsonify(resultado)
+
+@main.route("/agenda")
+def agenda():
+
+    return render_template("agenda.html")

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>
+        Agenda Médica
+    </title>
+
+</head>
+
+
+<body>
+
+
+<h1>
+    Agenda Médica
+</h1>
+
+
+<h2>
+    Login
+</h2>
+
+
+<form id="loginForm">
+
+
+<label>
+    Email:
+</label>
+
+<br>
+
+<input 
+    type="email" 
+    id="email"
+    required
+>
+
+
+<br><br>
+
+
+<label>
+    Senha:
+</label>
+
+<br>
+
+<input 
+    type="password"
+    id="senha"
+    required
+>
+
+
+<br><br>
+
+
+<button type="submit">
+    Entrar
+</button>
+
+
+</form>
+
+
+<p id="mensagem"></p>
+
+
+
+<script>
+
+
+const formulario = 
+document.getElementById("loginForm");
+
+
+
+formulario.addEventListener(
+"submit",
+async function(event){
+
+
+event.preventDefault();
+
+
+
+const resposta = await fetch(
+"/login",
+{
+
+method:"POST",
+
+headers:{
+    "Content-Type":"application/json"
+},
+
+
+body: JSON.stringify({
+
+    email:
+    document.getElementById("email").value,
+
+
+    senha:
+    document.getElementById("senha").value
+
+})
+
+
+});
+
+
+
+const dados =
+await resposta.json();
+
+
+
+if(resposta.ok){
+
+
+localStorage.setItem(
+    "token",
+    dados.token
+);
+
+
+window.location.href =
+"/agenda";
+
+
+}
+else{
+
+
+document.getElementById(
+"mensagem"
+).innerText =
+dados.message;
+
+
+}
+
+
+
+});
+
+
+</script>
+
+
+</body>
+
+</html>
