@@ -2,6 +2,7 @@
 <html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
+
     <title>Agenda Médica</title>
 
     <link
@@ -39,10 +40,12 @@
 
       if (!token) {
         alert("Usuário não autenticado");
+
         window.location.href = "/";
       }
 
       let dadosAgenda = [];
+
       let tabela = null;
 
       fetch("/agendamentos", {
@@ -57,10 +60,12 @@
         .then((data) => {
           if (data.erro) {
             mostrarMensagem(data.erro);
+
             return;
           }
 
           dadosAgenda = data;
+
           criarTabela(dadosAgenda);
         })
 
@@ -72,6 +77,7 @@
         const mensagem = document.getElementById("mensagem");
 
         mensagem.innerText = texto;
+
         mensagem.style.display = "block";
       }
 
@@ -86,17 +92,21 @@
           mensagem.style.display = "none";
         }
 
-        if (tabela !== null) {
-          tabela.destroy();
+        if (tabela) {
+          tabela.setData(dados);
 
-          document.getElementById("tabela").innerHTML = "";
+          return;
         }
 
         tabela = new Tabulator("#tabela", {
           data: dados,
+
           layout: "fitColumns",
+
           pagination: "local",
+
           paginationSize: 10,
+
           columns: [
             {
               title: "Data",
@@ -136,23 +146,6 @@
             {
               title: "Status",
               field: "status",
-              formatter: function (cell) {
-                const valor = cell.getValue();
-
-                if (valor === "Confirmado") {
-                  return `<span class="status confirmado">${valor}</span>`;
-                }
-
-                if (valor === "Cancelado") {
-                  return `<span class="status cancelado">${valor}</span>`;
-                }
-
-                if (valor === "Pendente") {
-                  return `<span class="status pendente">${valor}</span>`;
-                }
-
-                return valor;
-              },
             },
           ],
         });
@@ -173,6 +166,7 @@
 
       document.getElementById("logout").addEventListener("click", function () {
         localStorage.removeItem("token");
+
         window.location.href = "/";
       });
     </script>
