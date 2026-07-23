@@ -30,6 +30,11 @@
 
 <div id="tabela"></div>
 
+<p
+    id="mensagem"
+    style="display:none;color:red;font-weight:bold;"
+></p>
+
 
 
 <script src="https://unpkg.com/tabulator-tables@6.3.1/dist/js/tabulator.min.js"></script>
@@ -99,88 +104,87 @@ fetch("/agendamentos", {
 
 });
 
-
-
-
-
 function carregarTabela(dados){
 
-
-new Tabulator("#tabela", {
-
-
-    data:dados,
+    const mensagem =
+    document.getElementById("mensagem");
 
 
-    layout:"fitColumns",
+    if(dados.length === 0){
+
+        mensagem.innerText =
+        "Nenhum agendamento encontrado.";
+
+        mensagem.style.display =
+        "block";
+
+    }
+
+    else{
+
+        mensagem.style.display =
+        "none";
+
+    }
 
 
-    pagination:"local",
+    new Tabulator("#tabela", {
 
+        data:dados,
 
-    paginationSize:10,
+        layout:"fitColumns",
 
+        pagination:"local",
 
-    columns:[
+        paginationSize:10,
 
+        columns:[
 
-        {
-            title:"Data",
-            field:"data"
-        },
+            {
+                title:"Data",
+                field:"data"
+            },
 
+            {
+                title:"Horário",
+                field:"horario"
+            },
 
-        {
-            title:"Horário",
-            field:"horario"
-        },
+            {
+                title:"Paciente",
+                field:"paciente"
+            },
 
+            {
+                title:"CPF",
+                field:"cpf"
+            },
 
-        {
-            title:"Paciente",
-            field:"paciente"
-        },
+            {
+                title:"Médico",
+                field:"medico"
+            },
 
+            {
+                title:"Especialidade",
+                field:"especialidade"
+            },
 
-        {
-            title:"CPF",
-            field:"cpf"
-        },
+            {
+                title:"Convênio",
+                field:"convenio"
+            },
 
+            {
+                title:"Status",
+                field:"status"
+            }
 
-        {
-            title:"Médico",
-            field:"medico"
-        },
+        ]
 
-
-        {
-            title:"Especialidade",
-            field:"especialidade"
-        },
-
-
-        {
-            title:"Convênio",
-            field:"convenio"
-        },
-
-
-        {
-            title:"Status",
-            field:"status"
-        }
-
-
-    ]
-
-
-});
-
+    });
 
 }
-
-
 
 document
 .getElementById("busca")
@@ -188,23 +192,24 @@ document
 "keyup",
 function(){
 
-
 let valor = this.value.toLowerCase();
-
 
 let filtrados = dadosAgenda.filter(item =>
 
-
-item.paciente.toLowerCase().includes(valor)
-
-||
-
-item.cpf.includes(valor)
+(item.paciente || "")
+.toLowerCase()
+.includes(valor)
 
 ||
 
-item.medico.toLowerCase().includes(valor)
+(item.cpf || "")
+.includes(valor)
 
+||
+
+(item.medico || "")
+.toLowerCase()
+.includes(valor)
 
 );
 
