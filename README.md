@@ -1,4 +1,4 @@
-# Agenda Médica API
+# Agenda Médica API - Desafio Técnico
 
 Sistema de gerenciamento de agenda médica desenvolvido em Python utilizando Flask, SQLite, Docker e integração com API HTTP.
 
@@ -228,6 +228,17 @@ POST /pacientes
 ```bash
 pytest
 ```
+
+## Busca de agendamentos
+
+A tela principal permite filtrar registros por:
+
+- Nome do paciente;
+- CPF;
+- Médico.
+
+Quando nenhum registro é encontrado, uma mensagem informativa é exibida ao usuário.
+
 ## Testes implementados:
 - Login com credenciais válidas;
 - Login com credenciais inválidas;
@@ -256,7 +267,7 @@ pytest
 ## Limitações conhecidas
 - A API simulada utiliza dados estáticos armazenados em JSON.
 - O banco SQLite foi escolhido visando simplicidade e facilidade de execução.
-- Não foi desenvolvido frontend completo, pois o foco principal do desafio foi backend, integração e arquitetura da aplicação.
+- O frontend foi desenvolvido utilizando templates Flask e a biblioteca Tabulator para exibição da agenda.
 
 
 
