@@ -1,0 +1,35 @@
+[
+    {
+        "id": 1,
+        "paciente": "Carlos Oliveira",
+        "cpf": "123.456.789-00",
+        "medico": "Dr. João Silva",
+        "especialidade": "Cardiologia",
+        "data": "25/07/2026",
+        "horario": "08:30",
+        "convenio": "Unimed",
+        "status": "Confirmado"
+    },
+    {
+        "id": 2,
+        "paciente": "Maria Souza",
+        "cpf": "987.654.321-00",
+        "medico": "Dra. Ana Costa",
+        "especialidade": "Dermatologia",
+        "data": "26/07/2026",
+        "horario": "10:00",
+        "convenio": "Amil",
+        "status": "Pendente"
+    },
+    {
+        "id": 3,
+        "paciente": "Gabriel Silva",
+        "cpf": "111.222.333-44",
+        "medico": "Dr. Pedro Santos",
+        "especialidade": "Ortopedia",
+        "data": "27/07/2026",
+        "horario": "14:30",
+        "convenio": "Bradesco Saúde",
+        "status": "Cancelado"
+    }
+]

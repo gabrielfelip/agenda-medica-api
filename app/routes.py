@@ -2,7 +2,7 @@ from flask import Blueprint, jsonify, request
 from sqlalchemy.exc import IntegrityError
 from .database import db
 from .models import Paciente
-from flask_jwt_extended import jwt_required
+from flask_jwt_extended import jwt_required, get_jwt_identity
 
 
 main = Blueprint("main", __name__)
@@ -26,7 +26,11 @@ def health():
 @jwt_required()
 def listar_pacientes():
 
-    pacientes = Paciente.query.all()
+    usuario_id = get_jwt_identity()
+
+    pacientes = Paciente.query.filter_by(
+        usuario_id=usuario_id
+    ).all()
 
     return jsonify([
         {
@@ -51,11 +55,15 @@ def criar_paciente():
         }), 400
 
 
+    usuario_id = get_jwt_identity()
+
     paciente = Paciente(
         nome=dados["nome"],
         email=dados.get("email"),
-        telefone=dados.get("telefone")
+        telefone=dados.get("telefone"),
+        usuario_id=usuario_id
     )
+
 
     try:
         db.session.add(paciente)
@@ -75,16 +83,24 @@ def criar_paciente():
     }), 201
 
 
+
 @main.route("/pacientes/<int:id>", methods=["GET"])
 @jwt_required()
 def buscar_paciente(id):
 
-    paciente = Paciente.query.get(id)
+    usuario_id = get_jwt_identity()
+
+    paciente = Paciente.query.filter_by(
+        id=id,
+        usuario_id=usuario_id
+    ).first()
+
 
     if not paciente:
         return jsonify({
             "message": "Paciente não encontrado"
         }), 404
+
 
     return jsonify({
         "id": paciente.id,
@@ -94,43 +110,74 @@ def buscar_paciente(id):
     })
 
 
+
 @main.route("/pacientes/<int:id>", methods=["PUT"])
 @jwt_required()
 def atualizar_paciente(id):
 
-    paciente = Paciente.query.get(id)
+    usuario_id = get_jwt_identity()
+
+    paciente = Paciente.query.filter_by(
+        id=id,
+        usuario_id=usuario_id
+    ).first()
+
 
     if not paciente:
         return jsonify({
             "message": "Paciente não encontrado"
         }), 404
 
+
     dados = request.json
 
-    paciente.nome = dados.get("nome", paciente.nome)
-    paciente.email = dados.get("email", paciente.email)
-    paciente.telefone = dados.get("telefone", paciente.telefone)
+
+    paciente.nome = dados.get(
+        "nome",
+        paciente.nome
+    )
+
+    paciente.email = dados.get(
+        "email",
+        paciente.email
+    )
+
+    paciente.telefone = dados.get(
+        "telefone",
+        paciente.telefone
+    )
+
 
     db.session.commit()
+
 
     return jsonify({
         "message": "Paciente atualizado com sucesso!"
     })
 
 
+
 @main.route("/pacientes/<int:id>", methods=["DELETE"])
 @jwt_required()
 def deletar_paciente(id):
 
-    paciente = Paciente.query.get(id)
+    usuario_id = get_jwt_identity()
+
+    paciente = Paciente.query.filter_by(
+        id=id,
+        usuario_id=usuario_id
+    ).first()
+
 
     if not paciente:
         return jsonify({
             "message": "Paciente não encontrado"
         }), 404
 
+
     db.session.delete(paciente)
     db.session.commit()
+
 
     return jsonify({
         "message": "Paciente removido com sucesso!"
