@@ -1,0 +1,251 @@
+* {
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* =========================
+   LOGIN
+========================= */
+
+.login-page {
+  margin: 0;
+  min-height: 100vh;
+  width: 100%;
+  background: linear-gradient(135deg, #32608d, #1e3a8a);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.login-card {
+  background: white;
+  width: 380px;
+  padding: 45px;
+  border-radius: 18px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+}
+
+.login-card h1 {
+  text-align: center;
+  color: #1e40af;
+  margin-bottom: 10px;
+}
+
+.subtitle {
+  text-align: center;
+  color: #666;
+  font-size: 14px;
+  margin-bottom: 30px;
+}
+
+label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: bold;
+}
+
+input {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+}
+
+input:focus {
+  outline: none;
+  border-color: #2563eb;
+}
+
+button {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  background: #2563eb;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #1d4ed8;
+}
+
+#mensagem {
+  margin-top: 20px;
+  text-align: center;
+  color: #dc2626;
+  font-weight: bold;
+}
+
+/* =========================
+   AGENDA
+========================= */
+
+.agenda-page {
+  margin: 0;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #32608d, #1e3a8a);
+  padding: 40px;
+}
+
+.agenda-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  background: #ffffff;
+  padding: 35px;
+  border-radius: 18px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.18);
+}
+
+.agenda-container h1 {
+  color: #1e40af;
+  margin-bottom: 25px;
+}
+
+#busca {
+  width: 400px;
+  max-width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  margin-bottom: 25px;
+}
+
+#busca:focus {
+  outline: none;
+  border-color: #2563eb;
+}
+
+#tabela {
+  margin-top: 20px;
+}
+
+.mensagem {
+  color: #dc2626;
+  font-weight: bold;
+}
+
+/* =========================
+   TABULATOR CUSTOM STYLE
+========================= */
+
+.tabulator {
+  background-color: white !important;
+  border-radius: 12px !important;
+  border: 1px solid #e2e8f0 !important;
+  overflow: hidden;
+}
+
+/* Cabeçalho */
+
+.tabulator .tabulator-header {
+  background-color: #1e3a8a !important;
+}
+
+.tabulator .tabulator-header .tabulator-col {
+  background-color: #1e3a8a !important;
+  color: white !important;
+}
+
+.tabulator .tabulator-header .tabulator-col-title {
+  color: white !important;
+  font-weight: 600;
+}
+
+/* Linhas */
+
+.tabulator-row {
+  background-color: white !important;
+}
+
+.tabulator-row:nth-child(even) {
+  background-color: #f8fafc !important;
+}
+
+.tabulator-row:hover {
+  background-color: #dbeafe !important;
+}
+
+/* Paginação */
+
+.tabulator-footer {
+  background-color: white !important;
+  border-top: 1px solid #e5e7eb !important;
+}
+
+.tabulator-page {
+  background: transparent !important;
+  color: #475569 !important;
+  border: 1px solid #cbd5e1 !important;
+  border-radius: 6px;
+}
+
+.tabulator-page:hover {
+  background: #eff6ff !important;
+}
+
+.tabulator-page.active {
+  background: #1e3a8a !important;
+  color: white !important;
+  border-color: #1e3a8a !important;
+}
+
+/* =========================
+   LOGOUT BUTTON
+========================= */
+
+.logout-button {
+  width: auto;
+  padding: 10px 20px;
+  background: #dc2626;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  float: right;
+  margin-top: -55px;
+}
+
+.logout-button:hover {
+  background: #b91c1c;
+}
+
+/* =========================
+   STATUS BADGES
+========================= */
+.status {
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: bold;
+    display: inline-block;
+
+}
+
+.confirmado {
+    background: #dcfce7;
+    color: #166534;
+}
+
+
+.pendente {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+
+.cancelado {
+    background: #fee2e2;
+    color: #991b1b;
+}
