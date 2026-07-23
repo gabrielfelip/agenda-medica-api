@@ -11,6 +11,7 @@ services:
       - .:/app
     depends_on:
       - mock_api
+    restart: always
 
 
   mock_api:
@@ -19,3 +20,4 @@ services:
     container_name: agenda-medica-mock-api
     ports:
       - "5001:5001"
+    restart: always

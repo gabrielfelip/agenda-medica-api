@@ -12,6 +12,10 @@ from dotenv import load_dotenv
 load_dotenv()
 
 
+# Garante que a pasta do SQLite exista
+os.makedirs("instance", exist_ok=True)
+
+
 app = Flask(__name__)
 
 
@@ -21,10 +25,20 @@ app.config["JWT_SECRET_KEY"] = os.getenv(
 )
 
 
-app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv(
+database_url = os.getenv(
     "DATABASE_URL",
-    "sqlite:///agenda.db"
+    "sqlite:///instance/agenda.db"
 )
+
+if database_url.startswith("sqlite:///"):
+    db_path = database_url.replace("sqlite:///", "")
+
+    db_path = os.path.abspath(db_path)
+
+    database_url = f"sqlite:///{db_path}"
+
+
+app.config["SQLALCHEMY_DATABASE_URI"] = database_url
 
 
 print(
